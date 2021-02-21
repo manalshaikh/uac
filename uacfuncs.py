@@ -13,7 +13,7 @@ class core:
         fileopen.close()
         print("The data has been downloaded and saved as data.json in your directory.")
     def convert():
-        conn = sqlite3.connect('uacData')
+        conn = sqlite3.connect('uacDataDB')
         c = conn.cursor()
 
         #Table creation if not exists

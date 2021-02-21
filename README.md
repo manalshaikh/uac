@@ -5,6 +5,10 @@ Protect UAC is a COVID-19 monitoring tool made in Python consisting of data pres
  - tkinter
  - urllib
 
+# How to use?
+This isn't required but to avoid any confusions between filenames, here we go.
+`python uac.py`
+
 # Upcoming planned features/fixes
  - Graph presentation of data.
  - Better error handling.
