@@ -7,7 +7,7 @@ from tkinter import messagebox
 
 main = tk.Tk()
 #SQLite3 Initialization
-conn = sqlite3.connect('uacData')
+conn = sqlite3.connect('uacDataDB')
 c = conn.cursor()
 t = ('Maharashtra',)
 sqlpull = c.execute("SELECT totalInfected,newInfected,deceased,newDeceased FROM cases WHERE region='Maharashtra'")
