@@ -187,25 +187,14 @@ class Toplevel1:
 
         self.Frame5 = tk.Frame(self.Frame1)
         self.Frame5.place(relx=0.015, rely=0.461, relheight=0.495
-                , relwidth=0.471)
+                , relwidth=0.965)
         self.Frame5.configure(relief='groove')
         self.Frame5.configure(borderwidth="2")
         self.Frame5.configure(relief="groove")
 
-        self.Entry1 = tk.Entry(self.Frame5)
-        self.Entry1.place(relx=0.492, rely=0.093, height=33, relwidth=0.348)
-        self.Entry1.configure(background="white")
-        self.Entry1.configure(font="TkFixedFont")
-
-        
-
-        self.Label14 = tk.Label(self.Frame4)
-        self.Label14.place(relx=0.066, rely=0.138, height=21, width=99)
-        self.Label14.configure(text='''Active Cases -''')
-        
-        self.Button1 = tk.Button(self.Frame5)
-        self.Button1.place(relx=0.328, rely=0.465, height=31, width=71)
-        self.Button1.configure(text='''Button''')
+        self.Label14 = tk.Label(self.Frame5)
+        self.Label14.place(relx=0.288, rely=0.372, height=21, width=249)
+        self.Label14.configure(text='''Graph Coming soon!''')
 
 
         self.menubar = tk.Menu(top,font="TkMenuFont",bg=_bgcolor,fg=_fgcolor)
