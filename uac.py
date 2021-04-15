@@ -6,8 +6,13 @@
 #    Mar 06, 2021 11:38:23 AM IST  platform: Linux
 
 import sys
-import sqlite3
 import json
+import datetime
+
+x = datetime.datetime.now()
+fd = x.strftime("%dth %B, %G")
+today = x.strftime("%d%m%Y")
+filename = "data/" + today + ".json"
 
 try:
     import Tkinter as tk
@@ -61,27 +66,18 @@ class Toplevel1:
         _compcolor = '#d9d9d9' # X11 color: 'gray85'
         _ana1color = '#d9d9d9' # X11 color: 'gray85'
         _ana2color = '#ececec' # Closest X11 color: 'gray92'
-        conn = sqlite3.connect('uacDataDB')
-        c = conn.cursor()
-        t = ('Maharashtra',)
-        sqlpull = c.execute("SELECT totalInfected,newInfected,deceased,newDeceased FROM cases WHERE region='Maharashtra'")
-        results = sqlpull.fetchall()
-        for rows in results:
-            totalInfected = rows[0]
-            newInfected = rows[1]
-            deceased = rows[2]
-            newDeceased = rows[3]
-            aTotalInfected = rows[0]
-            aInfected = rows[1]
-            aDeceased = rows[2]
-            aNewDeceased = rows[3]
 
         #TotalIndiaCase
-        fp = open('data.json')
+        fp = open(filename)
         fr = json.load(fp)
         totalIndiaActive = fr['activeCases']
         totalIndiaInfected = fr['totalCases']
         totalIndiaNewInfected = fr['activeCasesNew']
+        totalMahaCases = fr["regionData"][20]["totalInfected"]
+        newMahaCases = fr["regionData"][20]["newInfected"]
+        totalRecoveredMahaCases = fr["regionData"][20]["recovered"]
+        newMahaRecovery = fr["regionData"][20]["newRecovered"]
+        newMahaDeceased = fr["regionData"][20]["newDeceased"]
         top.geometry("648x434+546+357")
         top.minsize(1, 1)
         top.maxsize(1905, 1050)
@@ -94,6 +90,11 @@ class Toplevel1:
         self.Frame1.configure(relief='groove')
         self.Frame1.configure(borderwidth="2")
         self.Frame1.configure(relief="groove")
+
+        self.Label0 = tk.Label(self.Frame1)
+        self.Label0.place(relx=0.380, rely=0.018, height=20, width=180)
+        self.Label0.configure(activebackground="#f9f9f9")
+        self.Label0.configure(text="Cases as of " + fd)
 
         self.Frame2 = tk.Frame(self.Frame1)
         self.Frame2.place(relx=0.015, rely=0.092, relheight=0.341
@@ -118,24 +119,24 @@ class Toplevel1:
         self.Label4.configure(text='''Infected in last 24 hours -''')
 
         self.Label5 = tk.Label(self.Frame2)
-        self.Label5.place(relx=0.034, rely=0.676, height=20, width=107)
+        self.Label5.place(relx=0.034, rely=0.676, height=20, width=127)
         self.Label5.configure(activebackground="#f9f9f9")
         self.Label5.configure(text='''Total Deceased -''')
 
         self.Label11 = tk.Label(self.Frame2)
         self.Label11.place(relx=0.805, rely=0.27, height=21, width=50)
         self.Label11.configure(activebackground="#f9f9f9")
-        self.Label11.configure(text=totalInfected)
+        self.Label11.configure(text=totalMahaCases)
 
         self.Label12 = tk.Label(self.Frame2)
-        self.Label12.place(relx=0.842, rely=0.473, height=21, width=39)
+        self.Label12.place(relx=0.812, rely=0.473, height=21, width=46)
         self.Label12.configure(activebackground="#f9f9f9")
-        self.Label12.configure(text=newInfected)
+        self.Label12.configure(text=newMahaCases)
 
         self.Label13 = tk.Label(self.Frame2)
-        self.Label13.place(relx=0.842, rely=0.676, height=21, width=39)
+        self.Label13.place(relx=0.823, rely=0.676, height=21, width=30)
         self.Label13.configure(activebackground="#f9f9f9")
-        self.Label13.configure(text=deceased)
+        self.Label13.configure(text=newMahaDeceased)
 
         self.Frame3 = tk.Frame(self.Frame1)
         self.Frame3.place(relx=0.5, rely=0.09, relheight=0.343, relwidth=0.475)
@@ -206,10 +207,6 @@ class Toplevel1:
                 label="Update")
         self.sub_menu.add_command(
                 label="Download Data", command=lambda: firsttest_support.download())
-        self.sub_menu.add_command(
-                label="Upload Data", command=lambda: firsttest_support.convert())
-        conn.commit()
-        conn.close()
 if __name__ == '__main__':
     vp_start_gui()
 

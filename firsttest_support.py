@@ -10,6 +10,10 @@ import urllib.request
 import sqlite3
 import json
 from tkinter import messagebox
+import datetime
+x = datetime.datetime.now()
+today = x.strftime("%d%m%Y")
+filenam = "data/" + today + ".json"
 try:
     import Tkinter as tk
 except ImportError:
@@ -34,29 +38,11 @@ def destroy_window():
     top_level.destroy()
     top_level = None
 
-if __name__ == '__main__':
-    import firsttest
-    firsttest.vp_start_gui()
 
 def download():
     url = urllib.request.urlopen("https://api.apify.com/v2/key-value-stores/toDWvRj1JpTXiM8FF/records/LATEST?disableRedirect=true")
     s = url.read()
-    fileopen = open("data.json", 'wb')
+    fileopen = open(filenam, 'wb')
     fileopen.write(s)
     fileopen.close()
     tk.messagebox.showinfo(message="Downloaded successfully! Proceed to upload data.")
-def convert():
-    conn = sqlite3.connect('uacDataDB')
-    c = conn.cursor()
-
-    #Table creation if not exists
-    c.execute('CREATE TABLE IF NOT EXISTS cases(region text, totalInfected integer, newInfected integer, recovered integer, newRecovered integer, deceased integer, newDeceased integer)')
-
-    #Convert Json in SQLite
-    jd = json.load(open('data.json'))
-    for n in jd['regionData']:
-        c.execute("INSERT INTO cases VALUES(?, ?, ?, ?, ?, ?, ?)", [n['region'], n['totalInfected'], n['newInfected'], n['recovered'], n['newRecovered'], n['deceased'], n['newDeceased']])
-    tk.messagebox.showinfo(message="Converted successfully! Restart the program to reflect new data.")
-    #Committing and closing after queries
-    conn.commit()
-    conn.close()
